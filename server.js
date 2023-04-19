@@ -20,3 +20,5 @@ const connectDb = async () => {
 }
 
 connectDb();
+
+app.listen(process.env.PORT | port);
