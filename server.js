@@ -20,5 +20,3 @@ const connectDb = async () => {
 }
 
 connectDb();
-
-module.exports = app;
