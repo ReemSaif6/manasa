@@ -19,9 +19,10 @@ function createToken (payload){
 // function to verify a JWT token
 function verifyToken(token){
     try {
-        return verify(token, JWT_SECRET);
+        return jwt.verify(token, JWT_SECRET);
     } catch (err) {
-        throw err;
+        console.error(err);
+        return null; 
     }
 }
 
