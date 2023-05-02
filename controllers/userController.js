@@ -1,5 +1,7 @@
 const userService = require('../services/userService');
 const express = require('express');
+const jwt = require('../utils/jwt');
+const User = require('../models/userModel');
 module.exports.getUsers = async (req = express.request, res = express.response) =>{
     try {
 		const users = await userService.getUsers();
@@ -10,11 +12,13 @@ module.exports.getUsers = async (req = express.request, res = express.response) 
 	}
 };
 module.exports.login = async (req = express.request, res = express.response) => {
+    const{email,password} = req.body;
     try {
         const response = await userService.login(req.body.email, req.body.password);
         if (response.result) {
             const token = jwt.createToken({ userId: response.user._id });
-            return res.status(200).json({ token });
+            const user = await User.findOne({email});
+            return res.status(200).json({user,token });
         }
         res.status(401).json({ message: "Login failed" });
     } catch (err) {
@@ -57,7 +61,7 @@ module.exports.updateUser = async (req = express.request, res = express.response
 module.exports.removeUser = async (req = express.request, res = express.response) => {
     try {
         await userService.removeUser(req.params.id);
-        res.status(204);
+        res.sendStatus(204);
     }
     catch (err) {
         const errors = `FAILD to delete this user with id: ${req.params.id}, error:${err}`;

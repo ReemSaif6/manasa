@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
-
+const userRouter = require('./routers/userRouter');
 const app = express();
 const port = 3000;
 
@@ -20,5 +20,5 @@ const connectDb = async () => {
 }
 
 connectDb();
-
+app.use('/',userRouter);
 app.listen(process.env.PORT | port);

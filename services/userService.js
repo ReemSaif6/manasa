@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
+const jwt = require('jsonwebtoken');
 module.exports.getUsers = async () => {
-    return await User.find().populate('offer').populate('user').populate('reviews')
+    return await User.find();
 };
 module.exports.createUser = async (userData) => {
 	return await User.create(userData);

@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const validator = require('validator');
-
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const userSchema = new Schema({
     firstName: {
         type: String,
@@ -27,6 +28,13 @@ const userSchema = new Schema({
     }
 
 });
+
+userSchema.pre('save', async function (next) {
+    let salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+});
+
 userSchema.methods.comparePasswords = async function (candidatePassword) {
     return await bcrypt.compare(candidatePassword, this.password);
 }
