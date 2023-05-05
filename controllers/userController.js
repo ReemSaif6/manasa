@@ -2,7 +2,7 @@ const userService = require('../services/userService');
 const express = require('express');
 const jwt = require('../utils/jwt');
 const User = require('../models/userModel');
-module.exports.getUsers = async (req = express.request, res = express.response) =>{
+module.exports.getUsers = async (req = express.request, res = express.response ) =>{
     try {
 		const users = await userService.getUsers();
 		res.status(200).json(users);
@@ -10,6 +10,17 @@ module.exports.getUsers = async (req = express.request, res = express.response) 
 		const error = `Failed to get users, error: ${err}`;
 		res.status(400).json({ error });
 	}
+};
+module.exports.getCurrentUser= async (req = express.request, res = express.response) => {
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verifyToken(token); 
+        const userId = decodedToken.userId; 
+        const user = await userService.getCurrentUser(userId); 
+        res.status(200).json({ user });
+    } catch (error) {
+          res.status(401).json({ error: 'Invalid or expired token'});
+        }
 };
 module.exports.login = async (req = express.request, res = express.response) => {
     const{email,password} = req.body;

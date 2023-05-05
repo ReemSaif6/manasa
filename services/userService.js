@@ -1,5 +1,5 @@
 const User = require('../models/userModel');
-const jwt = require('jsonwebtoken');
+
 module.exports.getUsers = async () => {
     return await User.find();
 };
@@ -41,6 +41,10 @@ module.exports.removeUser = async _id => {
 	return await User.deleteOne({ _id });
 };
 module.exports.getUserById = async (userId) => {
+	const user = await User.findById(userId);
+	return user;
+};
+module.exports.getCurrentUser = async (userId) => {
 	const user = await User.findById(userId);
 	return user;
 };
