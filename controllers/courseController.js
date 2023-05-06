@@ -59,12 +59,3 @@ module.exports.deleteCourse = async (req = express.request, res = express.respon
       res.status(400).json({ errors });
   } 
 };
-
-module.exports.getCurrentCourse = async (req = express.request, res = express.response) => {
-  try {
-    const currentCourse = await courseService.getCurrentCourses();
-    res.status(200).json(currentCourse);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-};
