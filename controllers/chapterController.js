@@ -15,7 +15,7 @@ module.exports.createChapter = async (req = express.request, res = express.respo
     try{
     let chapter = new Chapter(req.body);
         chapter.save();
-        res.status(200).json(chapter);
+        res.status(201).json(chapter);
     }catch (err) {
         const error = `Failed to create chapter, error: ${err}`;
 		res.status(400).json({ error });

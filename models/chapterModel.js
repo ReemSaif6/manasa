@@ -9,8 +9,9 @@ const chapterSchema = new Schema({
         required: true
     },
     Semester: {
-        type: Number,
-        required: true
+        type: String,
+        required: true,
+        enum: ["first", "second", "both"]
     }
 
 });
