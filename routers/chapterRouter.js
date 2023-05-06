@@ -8,5 +8,4 @@ router.post('/chapter', chapterController.createChapter);
 router.put("/chapter/:id", chapterController.updateChapter);
 router.get('/chapter/:id', chapterController.getChapterById);
 router.delete("/chapter/:id", chapterController.removeChapter);
-router.get('/chapter', chapterController.getCurrentChapter);
 module.exports = router;

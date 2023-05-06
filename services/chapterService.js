@@ -17,7 +17,3 @@ module.exports.getChapterById = async (chapterId) => {
 module.exports.removeChapter = async _id => {
 	return await Chapter.deleteOne({ _id });
 };
-module.exports.getCurrentChapter = async (chapterId) => {
-	const chapter = await Chapter.findById(chapterId);
-	return chapter;
-};

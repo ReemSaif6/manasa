@@ -52,14 +52,3 @@ module.exports.removeChapter = async (req = express.request, res = express.respo
         res.status(400).json({ errors });
     }
 };
-module.exports.getCurrentChapter= async (req = express.request, res = express.response) => {
-    try {
-        const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verifyToken(token); 
-        const chapterId = decodedToken.chapterId; 
-        const chapter = await chapterService.getCurrentChapter(chapterId); 
-        res.status(200).json({ chapter });
-    } catch (error) {
-          res.status(401).json({ error: 'Invalid or expired token'});
-        }
-};
