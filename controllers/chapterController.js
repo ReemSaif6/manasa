@@ -1,6 +1,6 @@
 const chapterService = require('../services/chapterService');
 const express = require('express');
-const jwt = require('../utils/jwt');
+
 const Chapter = require('../models/chapterModel');
 module.exports.getChapters = async (req = express.request, res = express.response ) =>{
     try {
