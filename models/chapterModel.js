@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, default: mongoose } = require('mongoose');
 const chapterSchema = new Schema({
     chapterName: {
         type: String,
@@ -11,7 +11,16 @@ const chapterSchema = new Schema({
     Semester: {
         type: String,
         required: true,
-        enum: ["first", "second", "both"]
+        enum: ["الاول", "الثاني", "كليهما"]
+    },
+    CourseId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course',
+        required: true
+    },
+    courseName: {
+        type: String,
+        required: true
     }
 
 });

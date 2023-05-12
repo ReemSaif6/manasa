@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, default: mongoose } = require('mongoose');
 const lessonSchema = new Schema({
     lessonName: {
         type: String,
@@ -8,8 +8,9 @@ const lessonSchema = new Schema({
         type: Number,
         required: true
     },
-    chapterNumber: {
-        type: Number,
+    chapterId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'chapter',
         required: true
     }
 
