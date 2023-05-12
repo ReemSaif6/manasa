@@ -48,6 +48,7 @@ module.exports.updateMaterial = async (req = express.request, res = express.resp
     res.status(400).json(err);
   }
 };
+
 module.exports.deleteMaterial = async (req = express.request, res = express.response) => {
   try {
     const materialId = req.params.id;

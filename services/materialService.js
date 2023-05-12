@@ -16,6 +16,7 @@ module.exports.getMaterialById = async (materialId) => {
 module.exports.updateMaterial = async (materialId, materialData) => {
 	return await Material.findByIdAndUpdate(materialId, materialData, { new: true });
 };
+
 module.exports.deleteMaterial = async (materialId) => {
 	return await Material.findByIdAndDelete(materialId);
 };

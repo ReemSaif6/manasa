@@ -8,4 +8,4 @@ router.get('/material/:id', materialController.getMaterialById);
 router.put('/material/:id', materialController.updateMaterial);
 router.delete('/material/:id', materialController.deleteMaterial);
  
-module.exports = router; 
+module.exports = router;
