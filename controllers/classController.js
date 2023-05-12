@@ -1,5 +1,6 @@
 const classService = require('../services/classService');
 const express = require('express');
+
 module.exports.createClass = async (req = express.request, res = express.response) => {
   try {
     const classData = req.body;
@@ -18,6 +19,7 @@ module.exports.getAllClasses = async (req = express.request, res = express.respo
     res.status(400).json(err);
   }
 };
+
 module.exports.getClassById = async (req = express.request, res = express.response) => {
   try {
     const classId = req.params.id;
@@ -31,6 +33,7 @@ module.exports.getClassById = async (req = express.request, res = express.respon
     res.status(400).json(err);
   }
 };
+
 module.exports.updateClass = async (req = express.request, res = express.response) => {
   try {
     const classId = req.params.id;
@@ -45,6 +48,7 @@ module.exports.updateClass = async (req = express.request, res = express.respons
     res.status(400).json(err);
   }
 };
+
 module.exports.deleteClass = async (req = express.request, res = express.response) => {
   try {
     const classId = req.params.id;

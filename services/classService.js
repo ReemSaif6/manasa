@@ -16,6 +16,7 @@ module.exports.getClassById = async (classId) => {
 module.exports.updateClass = async (classId, classData) => {
 	return await _Class.findByIdAndUpdate(classId, classData, { new: true });
 };
+
 module.exports.deleteClass = async (classId) => {
 	return await _Class.findByIdAndDelete(classId);
 };
