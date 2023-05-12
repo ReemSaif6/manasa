@@ -20,4 +20,4 @@ module.exports.updateCourse = async (courseId, courseData) => {
 module.exports.deleteCourse = async (courseId) => {
 	return await Course.findByIdAndDelete(courseId);
 };
-  
+
