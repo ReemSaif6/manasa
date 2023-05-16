@@ -1,7 +1,8 @@
+const chapter = require('../models/chapterModel');
 const Lesson = require('../models/lessonModel');
 
 module.exports.getLessons = async () => {
-    return await Lesson.find();
+    return await Lesson.find().populate('chapter');
 };
 module.exports.createLesson = async newLesson => {
 	return await Lesson.create(newLesson);

@@ -1,6 +1,6 @@
 const lessonService = require('../services/lessonService');
 const express = require('express');
-const Lesson = require('../models/lessonModel');
+const Lesson = require('../models/lessonModel');    
 module.exports.getLessons = async (req = express.request, res = express.response ) =>{
     try {
 		const lessons = await lessonService.getLessons();
