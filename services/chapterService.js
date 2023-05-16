@@ -1,7 +1,7 @@
 const Chapter = require('../models/chapterModel');
 
 module.exports.getChapters = async () => {
-    return await Chapter.find();
+    return await Chapter.find().populate('Course');
 };
 module.exports.createChapter = async newChapter => {
 	return await Chapter.create(newChapter);
