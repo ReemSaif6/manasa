@@ -6,7 +6,7 @@ module.exports.createMaterial = async (materialData) => {
 };
  
 module.exports.getAllMaterials = async () => {
-	return await Material.find({});
+	return await Material.find({}).populate('lesson');
 };
 
 module.exports.getMaterialById = async (materialId) => {
