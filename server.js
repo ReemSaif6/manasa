@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const userRouter = require('./routers/userRouter');
 
+const courseRouter = require('./routers/courseRouter');
 const classRouter = require('./routers/classRouter');
 const materialRouter = require('./routers/materialRouter');
 
@@ -27,6 +28,7 @@ const connectDb = async () => {
 connectDb();
 
 app.use('/',userRouter);
+app.use('/', courseRouter); 
 app.use('/', classRouter);
 app.use('/', materialRouter);
 
