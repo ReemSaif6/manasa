@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
+
 const userRouter = require('./routers/userRouter');
+
+const classRouter = require('./routers/classRouter');
 const materialRouter = require('./routers/materialRouter');
 
 const app = express();
@@ -24,6 +27,7 @@ const connectDb = async () => {
 connectDb();
 
 app.use('/',userRouter);
-app.use('/',materialRouter);
+app.use('/', classRouter);
+app.use('/', materialRouter);
 
 app.listen(process.env.PORT | port);
