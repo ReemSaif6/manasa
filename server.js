@@ -3,7 +3,9 @@ const express = require('express');
 const cors = require('cors');
 
 const userRouter = require('./routers/userRouter');
+
 const classRouter = require('./routers/classRouter');
+const materialRouter = require('./routers/materialRouter');
 
 const app = express();
 const port = 3000;
@@ -25,6 +27,7 @@ const connectDb = async () => {
 connectDb();
 
 app.use('/',userRouter);
-app.use('/',classRouter);
+app.use('/', classRouter);
+app.use('/', materialRouter);
 
 app.listen(process.env.PORT | port);
