@@ -11,18 +11,17 @@ const chapterSchema = new Schema({
     Semester: {
         type: String,
         required: true,
-        enum: ["الاول", "الثاني", "كليهما"]
+        enum: ["first", "second", "both"]
     },
     CourseId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Course',
+        ref: 'course',
         required: true
     },
-    courseName: {
-        type: String,
-        required: true
-    }
-
+    lessonsId: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'lesson'
+    }]
 });
 const chapter = model('chapter', chapterSchema);
 module.exports = chapter;

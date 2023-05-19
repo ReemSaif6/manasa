@@ -28,12 +28,11 @@ const connectDb = async () => {
 
 connectDb();
 
-app.use('/',userRouter);
-app.use('/',chapterRouter);
-app.use('/',lessonRouter);
+app.use('/', userRouter);
+app.use('/', chapterRouter);
+app.use('/', lessonRouter);
 app.use('/', courseRouter); 
 app.use('/', classRouter);
 app.use('/', materialRouter);
-
 
 app.listen(process.env.PORT | port);

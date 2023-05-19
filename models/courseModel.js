@@ -4,10 +4,13 @@ const courseSchema = new mongoose.Schema({
   courseName: { type: String, required: true },
   description: { type: String, required: false },
   image: { type: String, required: true  },
-  class: { type: String, required: true },
-  semester: { type: String, enum:["الأول", "الثاني", "كليهما"], required: true },
-  responsibleUserId: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true },
-  classId: { type: mongoose.Schema.Types.ObjectId, ref: '_Class', required: true }
+  semester: { type: String, enum:["first", "second", "both"], required: true },
+  responsible_SubAdmain_Id: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+  classId: { type: mongoose.Schema.Types.ObjectId, ref: 'Class', required: true },
+  chaptersId: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'chapter'
+  }]
 });
 
 const Course = mongoose.model('Course', courseSchema);

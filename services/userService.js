@@ -5,7 +5,6 @@ module.exports.getUsers = async () => {
 };
 module.exports.createUser = async (userData) => {
 	return await User.create(userData);
-
 };
 module.exports.login = async (email, password) => {
 	try {

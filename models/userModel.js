@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, default: mongoose } = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 
@@ -25,8 +25,15 @@ const userSchema = new Schema({
         type: String,
         required: true,
         minlength: 6,
-    }
-
+    },
+    isSubAdmin: {
+        type: Boolean,
+        default: true,
+    },
+    coursesId: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course',
+    }]
 });
 
 userSchema.pre('save', async function (next) {
