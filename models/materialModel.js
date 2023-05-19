@@ -9,6 +9,4 @@ const materialSchema = new mongoose.Schema({
 });
 
 const Material = mongoose.model('Material', materialSchema);
-
 module.exports = Material;
-

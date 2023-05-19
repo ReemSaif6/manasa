@@ -1,7 +1,7 @@
 const chapterService = require('../services/chapterService');
 const express = require('express');
-
 const Chapter = require('../models/chapterModel');
+
 module.exports.getChapters = async (req = express.request, res = express.response ) =>{
     try {
 		const chapters = await chapterService.getChapters();
@@ -11,6 +11,7 @@ module.exports.getChapters = async (req = express.request, res = express.respons
 		res.status(400).json({ error });
 	}
 };
+
 module.exports.createChapter = async (req = express.request, res = express.response) =>{
     try{
     let chapter = new Chapter(req.body);
@@ -21,6 +22,7 @@ module.exports.createChapter = async (req = express.request, res = express.respo
 		res.status(400).json({ error });
     }
 };
+
 module.exports.updateChapter = async (req = express.request, res = express.response) => {
     const updateFields = req.body;
     try {
@@ -32,6 +34,7 @@ module.exports.updateChapter = async (req = express.request, res = express.respo
         res.status(400).json({ errors });
     }
 };
+
 module.exports.getChapterById = async (req = express.request, res = express.response) => {
     try {
         const chapter = await chapterService.getChapterById(req.params.id);
@@ -42,6 +45,7 @@ module.exports.getChapterById = async (req = express.request, res = express.resp
         res.status(400).json({ error });
     }
 };
+
 module.exports.removeChapter = async (req = express.request, res = express.response) => {
     try {
         await chapterService.removeChapter(req.params.id);

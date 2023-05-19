@@ -1,4 +1,5 @@
 const { Schema, model, default: mongoose } = require('mongoose');
+
 const chapterSchema = new Schema({
     chapterName: {
         type: String,
@@ -23,5 +24,6 @@ const chapterSchema = new Schema({
         ref: 'lesson'
     }]
 });
+
 const chapter = model('chapter', chapterSchema);
 module.exports = chapter;
