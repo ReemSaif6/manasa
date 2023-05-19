@@ -30,10 +30,11 @@ const userSchema = new Schema({
     isSubAdmin: {
         type: Boolean,
         default: true,
+        require: true
     },
     coursesId: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Course',
+        ref: 'Course'
     }]
 });
 

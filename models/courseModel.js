@@ -5,7 +5,7 @@ const courseSchema = new mongoose.Schema({
   description: { type: String, required: false },
   image: { type: String, required: true  },
   semester: { type: String, enum:["first", "second", "both"], required: true },
-  responsible_SubAdmain_Id: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+  subAdmainId: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
   classId: { type: mongoose.Schema.Types.ObjectId, ref: 'Class', required: true },
   chaptersId: [{
     type: mongoose.Schema.Types.ObjectId,
