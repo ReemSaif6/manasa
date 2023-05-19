@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const classService = require('../services/classService')
 
 const courseSchema = new mongoose.Schema({
   courseName: { type: String, required: true },
@@ -11,6 +12,30 @@ const courseSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'chapter'
   }]
+});
+
+courseSchema.pre('save', async function (next) {
+  const course = this;
+  try {
+    const _class = await classService.getClassById(course.classId._id);
+    _class.coursesId.push(course);
+    await _class.save();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+courseSchema.pre('remove', async function (next) {
+  const course = this;
+  try {
+    const _class = await classService.getClassById(course.classId._id);
+    _class.coursesId.pull(course);
+    await _class.save();
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 const Course = mongoose.model('Course', courseSchema);

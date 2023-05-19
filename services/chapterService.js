@@ -6,7 +6,6 @@ module.exports.getChapters = async () => {
 
 module.exports.createChapter = async newChapter => {
 	return await Chapter.create(newChapter);
-
 };
 
 module.exports.updateChapter = async (id, updateFields) => {

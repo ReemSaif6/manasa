@@ -1,4 +1,5 @@
 const { Schema, model, default: mongoose } = require('mongoose');
+const courseService = require('../services/courseService')
 
 const chapterSchema = new Schema({
     chapterName: {
@@ -14,7 +15,7 @@ const chapterSchema = new Schema({
         required: true,
         enum: ["first", "second", "both"]
     },
-    CourseId: {
+    courseId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'course',
         required: true
@@ -23,6 +24,30 @@ const chapterSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'lesson'
     }]
+});
+
+chapterSchema.pre('save', async function (next) {
+    const chapter = this;
+    try {
+      const course = await courseService.getCourseById(chapter.courseId._id);
+      course.chaptersId.push(chapter);
+      await course.save();
+      next();
+    } catch (error) {
+      next(error);
+    }
+});
+
+chapterSchema.pre('remove', async function (next) {
+    const chapter = this;
+    try {
+      const course = await courseService.getCourseById(chapter.courseId._id);
+      course.chaptersId.pull(chapter);
+      await course.save();
+      next();
+    } catch (error) {
+      next(error);
+    }
 });
 
 const chapter = model('chapter', chapterSchema);

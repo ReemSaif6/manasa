@@ -1,4 +1,5 @@
 const { Schema, model, default: mongoose } = require('mongoose');
+const chapterService = require('../services/chapterService')
 
 const lessonSchema = new Schema({
     lessonName: {
@@ -14,10 +15,34 @@ const lessonSchema = new Schema({
         ref: 'chapter',
         required: true
     },
-    MaterialsId: [{
+    materialsId: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Material'
     }]
+});
+
+lessonSchema.pre('save', async function (next) {
+    const lesson = this;
+    try {
+      const chapter = await chapterService.getChapterById(lesson.chapterId._id);
+      chapter.lessonsId.push(lesson);
+      await chapter.save();
+      next();
+    } catch (error) {
+      next(error);
+    }
+});
+
+lessonSchema.pre('remove', async function (next) {
+  const lesson = this;
+  try {
+    const chapter = await chapterService.getChapterById(lesson.chapterId._id);
+    chapter.lessonsId.pull(lesson);
+    await chapter.save();
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 const lesson = model('lesson', lessonSchema);
