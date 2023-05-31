@@ -6,9 +6,9 @@ module.exports.createCourse = async (courseData) => {
 };
 
 module.exports.getAllCourses = async () => {
-	return await Course.find({}).populate('user').populate('_Class');
+	return await Course.find({}).populate('Class').populate('user');
 };
-
+ 
 module.exports.getCourseById = async (courseId) => {
 	return await Course.findById(courseId);
 };

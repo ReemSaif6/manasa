@@ -33,3 +33,17 @@ lessonSchema.pre('remove', async function (next) {
 });
 const Lesson = mongoose.model('Lesson', lessonSchema);
 module.exports = Lesson;
+
+
+
+
+// Pre-remove hook to remove associated chapters and their lessons
+courseSchema.pre('remove', async function (next) {
+  const chapterIds = this.chapters.map((chapterId) =>
+    mongoose.Types.ObjectId(chapterId)
+  );
+
+  await Chapter.deleteMany({ _id: { $in: chapterIds } });
+
+  next();
+});

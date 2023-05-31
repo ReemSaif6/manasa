@@ -30,7 +30,7 @@ module.exports.updateChapter = async (req = express.request, res = express.respo
         res.status(200).json(updatedChapter);
     }
     catch (err) {
-        const errors = `FAILD to Update chapter with id ${req.params.id}, err: ${error}`;
+        const errors = `FAILD to Update chapter with id ${req.params.id}, err: ${err}`;
         res.status(400).json({ errors });
     }
 };

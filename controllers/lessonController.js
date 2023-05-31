@@ -30,7 +30,7 @@ module.exports.updateLesson = async (req = express.request, res = express.respon
         res.status(200).json(updatedLesson);
     }
     catch (err) {
-        const errors = `FAILD to Update lesson with id ${req.params.id}, err: ${error}`;
+        const errors = `FAILD to Update lesson with id ${req.params.id}, err: ${err}`;
         res.status(400).json({ errors });
     }
 };

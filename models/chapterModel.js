@@ -10,11 +10,6 @@ const chapterSchema = new Schema({
         type: Number,
         required: true
     },
-    Semester: {
-        type: String,
-        required: true,
-        enum: ["first", "second", "both"]
-    },
     courseId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'course',
@@ -31,18 +26,22 @@ chapterSchema.pre('save', async function (next) {
     try {
       const course = await courseService.getCourseById(chapter.courseId._id);
       course.chaptersId.push(chapter);
+      console.log('push1');
+
       await course.save();
       next();
     } catch (error) {
       next(error);
     }
 });
-
+   
 chapterSchema.pre('remove', async function (next) {
     const chapter = this;
     try {
       const course = await courseService.getCourseById(chapter.courseId._id);
       course.chaptersId.pull(chapter);
+      console.log('pull');
+
       await course.save();
       next();
     } catch (error) {
