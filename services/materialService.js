@@ -6,11 +6,11 @@ module.exports.createMaterial = async (materialData) => {
 };
 
 module.exports.getAllMaterials = async () => {
-	return await Material.find({}).populate('lesson');
+	return await Material.find({}).populate('lessonsId');
 };
 
 module.exports.getMaterialById = async (materialId) => {
-	return await Material.findById(materialId);
+	return await Material.findById(materialId).populate('lessonsId');
 };
 
 module.exports.updateMaterial = async (materialId, materialData) => {

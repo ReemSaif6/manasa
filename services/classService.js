@@ -6,11 +6,11 @@ module.exports.createClass = async (classData) => {
 };
  
 module.exports.getAllClasses = async () => {
-	return await Class.find({});
+	return await Class.find({}).populate('coursesId');
 };
 
 module.exports.getClassById = async (classId) => {
-	return await Class.findById(classId);
+	return await Class.findById(classId).populate('coursesId');
 };
 
 module.exports.updateClass = async (classId, classData) => {

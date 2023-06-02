@@ -1,7 +1,7 @@
 const Chapter = require('../models/chapterModel');
 
 module.exports.getChapters = async () => {
-    return await Chapter.find().populate('Course');
+    return await Chapter.find().populate('courseId').populate('lessonsId');
 };
 
 module.exports.createChapter = async newChapter => {
@@ -13,7 +13,7 @@ module.exports.updateChapter = async (id, updateFields) => {
 };
 
 module.exports.getChapterById = async (chapterId) => {
-	const chapter = await Chapter.findById(chapterId);
+	const chapter = await Chapter.findById(chapterId).populate('courseId').populate('lessonsId');
 	return chapter;
 };
 

@@ -12,7 +12,7 @@ const chapterSchema = new Schema({
     },
     courseId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'course',
+        ref: 'Course',
         required: true
     },
     lessonsId: [{
@@ -26,8 +26,6 @@ chapterSchema.pre('save', async function (next) {
     try {
       const course = await courseService.getCourseById(chapter.courseId._id);
       course.chaptersId.push(chapter);
-      console.log('push1');
-
       await course.save();
       next();
     } catch (error) {
@@ -40,8 +38,6 @@ chapterSchema.pre('remove', async function (next) {
     try {
       const course = await courseService.getCourseById(chapter.courseId._id);
       course.chaptersId.pull(chapter);
-      console.log('pull');
-
       await course.save();
       next();
     } catch (error) {

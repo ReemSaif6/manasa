@@ -1,7 +1,7 @@
 const User = require('../models/userModel');
 
 module.exports.getUsers = async () => {
-    return await User.find();
+    return await User.find({}).populate('courses');
 };
 
 module.exports.createUser = async (userData) => {
@@ -45,7 +45,7 @@ module.exports.removeUser = async _id => {
 };
 
 module.exports.getUserById = async (userId) => {
-	const user = await User.findById(userId);
+	const user = await User.findById(userId).populate('courses');
 	return user;
 };
 

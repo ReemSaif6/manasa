@@ -1,8 +1,7 @@
-const chapter = require('../models/chapterModel');
 const Lesson = require('../models/lessonModel');
 
 module.exports.getLessons = async () => {
-    return await Lesson.find().populate('chapter');
+    return await Lesson.find().populate('chapterId').populate('materialsId');
 };
 
 module.exports.createLesson = async newLesson => {
@@ -15,7 +14,7 @@ module.exports.updateLesson = async (id, updateFields) => {
 };
 
 module.exports.getLessonById = async (lessonId) => {
-	const lesson = await Lesson.findById(lessonId);
+	const lesson = await Lesson.findById(lessonId).populate('chapterId').populate('materialsId');
 	return lesson;
 };
 
