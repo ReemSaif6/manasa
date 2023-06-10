@@ -6,14 +6,14 @@ const materialSchema = new mongoose.Schema({
   description: { type: String, required: false },
   contentType: { type: String, enum:[ "videos", "workSheetsAndExams", "flashCards"], required: true },
   content: { type: String, required: true },
-  lessonsId: { type: mongoose.Schema.Types.ObjectId, ref: 'lesson', required: true }
+  lessonId: { type: mongoose.Schema.Types.ObjectId, ref: 'lesson', required: true }
 });
-
+  
 materialSchema.pre('save', async function (next) {
   const material = this;
   try {
-    const lesson = await lessonService.getLessonById(material.lessonsId._id);
-    lesson.materialsId.push(material);
+    const lesson = await lessonService.getLessonById(material.lessonId._id);
+    lesson.materialsId.push(material.lessonId._id);
     await lesson.save();
     next();
   } catch (error) {
@@ -24,8 +24,8 @@ materialSchema.pre('save', async function (next) {
 materialSchema.pre('remove', async function (next) {
   const material = this;
   try {
-    const lesson = await lessonService.getLessonById(material.lessonsId._id);
-    lesson.materialsId.pull(material);
+    const lesson = await lessonService.getLessonById(material.lessonId._id);
+    lesson.materialsId.pull(material.lessonId._id);
     await lesson.save();
     next();
   } catch (error) {

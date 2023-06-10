@@ -25,7 +25,7 @@ lessonSchema.pre('save', async function (next) {
     const lesson = this;
     try {
       const chapter = await chapterService.getChapterById(lesson.chapterId._id);
-      chapter.lessonsId.push(lesson);
+      chapter.lessonsId.push(lesson._id);
       await chapter.save();
       next();
     } catch (error) {

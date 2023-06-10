@@ -39,12 +39,15 @@ courseSchema.pre('save', async function (next) {
   }
 });
 
-courseSchema.pre('remove', async function (next) {
+courseSchema.pre('findOneAndDelete', async function (next) {
   const course = this;
   try {
-    const _class = await classService.getClassById(course.classId._id);
+    console.log(course.courseName);
+    const _class = await classService.getClassById(course.classId);
+
     _class.coursesId.pull(course._id);
     await _class.save();
+
     next();
   } catch (error) {
     next(error);

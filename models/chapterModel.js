@@ -1,5 +1,8 @@
 const { Schema, model, default: mongoose } = require('mongoose');
-const courseService = require('../services/courseService')
+const courseService = require('../services/courseService');
+
+//const Lesson = require('../models/lessonModel');
+//const Material = require('../models/materialModel');
 
 const chapterSchema = new Schema({
     chapterName: {
@@ -24,7 +27,7 @@ const chapterSchema = new Schema({
 chapterSchema.pre('save', async function (next) {
     const chapter = this;
     try {
-      const course = await courseService.getCourseById(chapter.courseId._id);
+      const course = await courseService.getCourseById(chapter.courseId);
       course.chaptersId.push(chapter);
       await course.save();
       next();
@@ -36,6 +39,8 @@ chapterSchema.pre('save', async function (next) {
 chapterSchema.pre('remove', async function (next) {
     const chapter = this;
     try {
+      //await Lesson.deleteMany({chapterId: chapter._id});
+      //await Material.deleteMany({lessonsId: { $in: chapter._id}});
       const course = await courseService.getCourseById(chapter.courseId._id);
       course.chaptersId.pull(chapter);
       await course.save();
