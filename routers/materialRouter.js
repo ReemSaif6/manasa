@@ -7,5 +7,6 @@ router.get('/materials', materialController.getAllMaterials);
 router.get('/material/:id', materialController.getMaterialById);
 router.put('/material/:id', materialController.updateMaterial);
 router.delete('/material/:id', materialController.deleteMaterial);
+router.get('/search/:query', materialController.search);
  
 module.exports = router;

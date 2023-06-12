@@ -24,8 +24,8 @@ const lessonSchema = new Schema({
 lessonSchema.pre('save', async function (next) {
     const lesson = this;
     try {
-      const chapter = await chapterService.getChapterById(lesson.chapterId._id);
-      chapter.lessonsId.push(lesson._id);
+      const chapter = await chapterService.getChapterById(lesson.chapterId);
+      chapter.lessonsId.push(lesson);
       await chapter.save();
       next();
     } catch (error) {
@@ -36,7 +36,7 @@ lessonSchema.pre('save', async function (next) {
 lessonSchema.pre('remove', async function (next) {
   const lesson = this;
   try {
-    const chapter = await chapterService.getChapterById(lesson.chapterId._id);
+    const chapter = await chapterService.getChapterById(lesson.chapterId);
     chapter.lessonsId.pull(lesson);
     await chapter.save();
     next();

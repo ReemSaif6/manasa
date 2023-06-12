@@ -21,7 +21,8 @@ const chapterSchema = new Schema({
     lessonsId: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'lesson'
-    }]
+    }],
+    semester: { type: String, enum:["first", "second", "both"], required: true }
 });
 
 chapterSchema.pre('save', async function (next) {
