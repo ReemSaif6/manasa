@@ -2,9 +2,12 @@ const mongoose = require('mongoose');
 
 const classSchema = new mongoose.Schema({
   className: { type: String, required: true },
-  section: { type: String, enum:["علمي", "أدبي", "تجاري", "صناعي", "شرعي", "لا يوجد"], required: true },
+  section: { type: String, enum:["scientific", "literary", "commercial", "industrial", "legitimate", "nothing"], required: true },
+  coursesId: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Course'
+  }]
 });
 
-const _Class = mongoose.model('_Class', classSchema);
-
-module.exports = _Class;
+const Class = mongoose.model('Class', classSchema);
+module.exports = Class;

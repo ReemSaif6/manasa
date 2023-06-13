@@ -4,13 +4,13 @@ module.exports.createMaterial = async (materialData) => {
 	const material = new Material(materialData);
 	return await material.save();
 };
- 
+
 module.exports.getAllMaterials = async () => {
-	return await Material.find({}).populate('lesson');
+	return await Material.find({}).populate('lessonId');
 };
 
 module.exports.getMaterialById = async (materialId) => {
-	return await Material.findById(materialId);
+	return await Material.findById(materialId).populate('lessonId');
 };
 
 module.exports.updateMaterial = async (materialId, materialData) => {

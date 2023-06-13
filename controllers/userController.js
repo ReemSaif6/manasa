@@ -2,6 +2,7 @@ const userService = require('../services/userService');
 const express = require('express');
 const jwt = require('../utils/jwt');
 const User = require('../models/userModel');
+
 module.exports.getUsers = async (req = express.request, res = express.response ) =>{
     try {
 		const users = await userService.getUsers();
@@ -11,6 +12,7 @@ module.exports.getUsers = async (req = express.request, res = express.response )
 		res.status(400).json({ error });
 	}
 };
+
 module.exports.getCurrentUser= async (req = express.request, res = express.response) => {
     try {
         const token = req.headers.authorization.split(' ')[1];
@@ -22,6 +24,7 @@ module.exports.getCurrentUser= async (req = express.request, res = express.respo
           res.status(401).json({ error: 'Invalid or expired token'});
         }
 };
+
 module.exports.login = async (req = express.request, res = express.response) => {
     const{email,password} = req.body;
     try {
@@ -48,6 +51,7 @@ module.exports.createUser = async (req = express.request, res = express.response
         res.status(400).json({ error });
     }
 };
+
 module.exports.getUserById = async (req = express.request, res = express.response) => {
     try {
         const user = await userService.getUserById(req.params.id);
@@ -58,6 +62,7 @@ module.exports.getUserById = async (req = express.request, res = express.respons
         res.status(400).json({ error });
     }
 };
+
 module.exports.updateUser = async (req = express.request, res = express.response) => {
     const updateFields = req.body;
     try {
@@ -65,10 +70,11 @@ module.exports.updateUser = async (req = express.request, res = express.response
         res.status(200).json(updatedUser);
     }
     catch (err) {
-        const errors = `FAILD to Update user with id ${req.params.id}, err: ${error}`;
+        const errors = `FAILD to Update user with id ${req.params.id}, err: ${err}`;
         res.status(400).json({ errors });
     }
 };
+
 module.exports.removeUser = async (req = express.request, res = express.response) => {
     try {
         await userService.removeUser(req.params.id);

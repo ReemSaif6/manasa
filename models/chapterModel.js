@@ -1,4 +1,9 @@
 const { Schema, model, default: mongoose } = require('mongoose');
+const courseService = require('../services/courseService');
+
+//const Lesson = require('../models/lessonModel');
+//const Material = require('../models/materialModel');
+
 const chapterSchema = new Schema({
     chapterName: {
         type: String,
@@ -8,21 +13,43 @@ const chapterSchema = new Schema({
         type: Number,
         required: true
     },
-    Semester: {
-        type: String,
-        required: true,
-        enum: ["الاول", "الثاني", "كليهما"]
-    },
-    CourseId: {
+    courseId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course',
         required: true
     },
-    courseName: {
-        type: String,
-        required: true
-    }
-
+    lessonsId: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'lesson'
+    }],
+    semester: { type: String, enum:["first", "second", "both"], required: true }
 });
+
+chapterSchema.pre('save', async function (next) {
+    const chapter = this;
+    try {
+      const course = await courseService.getCourseById(chapter.courseId);
+      course.chaptersId.push(chapter);
+      await course.save();
+      next();
+    } catch (error) {
+      next(error);
+    }
+});
+   
+chapterSchema.pre('findOneAndDelete', async function (next) {
+    const chapter = this;
+    try {
+      //await Lesson.deleteMany({chapterId: chapter._id});
+      //await Material.deleteMany({lessonsId: { $in: chapter._id}});
+      const course = await courseService.getCourseById(chapter.courseId);
+      course.chaptersId.pull(chapter);
+      await course.save();
+      next();
+    } catch (error) {
+      next(error);
+    }
+});
+
 const chapter = model('chapter', chapterSchema);
 module.exports = chapter;

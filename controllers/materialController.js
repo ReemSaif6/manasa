@@ -1,3 +1,4 @@
+const Material = require('../models/materialModel');
 const materialService = require('../services/materialService');
 const express = require('express');
 
@@ -59,3 +60,26 @@ module.exports.deleteMaterial = async (req = express.request, res = express.resp
       res.status(400).json({ errors });
   } 
 };
+
+module.exports.searchMaterial = async (req = express.request, res = express.response) => {
+  const query = req.params.query;
+    try {
+      const results = await Material.find({
+        $or: [
+          { className: { $regex: query, $options: 'i' } },
+          { coursesId: { $elemMatch: { courseName: { $regex: query, $options: 'i' } } } },
+          { 'coursesId.chaptersId': { $elemMatch: { chapterName: { $regex: query, $options: 'i' } } } },
+          { 'coursesId.chaptersId.lessonsId': { $elemMatch: { lessonName: { $regex: query, $options: 'i' } } } },
+          { 'coursesId.chaptersId.lessonsId.materialsId': { $elemMatch: { materialName: { $regex: query, $options: 'i' } } } }
+        ],
+      })
+      .populate('coursesId', '-_id -__v')
+      .populate('coursesId.chaptersId', '-_id -__v')
+      .populate('coursesId.chaptersId.lessonsId', '-_id -__v')
+      .populate('coursesId.chaptersId.lessonsId.materialsId', '-_id -__v');
+      res.json(results);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    }
+}

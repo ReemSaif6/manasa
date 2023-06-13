@@ -1,6 +1,7 @@
 const lessonService = require('../services/lessonService');
 const express = require('express');
-const Lesson = require('../models/lessonModel');    
+const Lesson = require('../models/lessonModel');  
+
 module.exports.getLessons = async (req = express.request, res = express.response ) =>{
     try {
 		const lessons = await lessonService.getLessons();
@@ -10,6 +11,7 @@ module.exports.getLessons = async (req = express.request, res = express.response
 		res.status(400).json({ error });
 	}
 };
+
 module.exports.createLesson = async (req = express.request, res = express.response) =>{
     try{
     let lesson = new Lesson(req.body);
@@ -20,6 +22,7 @@ module.exports.createLesson = async (req = express.request, res = express.respon
 		res.status(400).json({ error });
     }
 };
+
 module.exports.updateLesson = async (req = express.request, res = express.response) => {
     const updateFields = req.body;
     try {
@@ -27,10 +30,11 @@ module.exports.updateLesson = async (req = express.request, res = express.respon
         res.status(200).json(updatedLesson);
     }
     catch (err) {
-        const errors = `FAILD to Update lesson with id ${req.params.id}, err: ${error}`;
+        const errors = `FAILD to Update lesson with id ${req.params.id}, err: ${err}`;
         res.status(400).json({ errors });
     }
 };
+
 module.exports.getLessonById = async (req = express.request, res = express.response) => {
     try {
         const lesson = await lessonService.getLessonById(req.params.id);
@@ -41,6 +45,7 @@ module.exports.getLessonById = async (req = express.request, res = express.respo
         res.status(400).json({ error });
     }
 };
+
 module.exports.removeLesson = async (req = express.request, res = express.response) => {
     try {
         await lessonService.removeLesson(req.params.id);
