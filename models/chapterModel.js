@@ -37,12 +37,12 @@ chapterSchema.pre('save', async function (next) {
     }
 });
    
-chapterSchema.pre('remove', async function (next) {
+chapterSchema.pre('findOneAndDelete', async function (next) {
     const chapter = this;
     try {
       //await Lesson.deleteMany({chapterId: chapter._id});
       //await Material.deleteMany({lessonsId: { $in: chapter._id}});
-      const course = await courseService.getCourseById(chapter.courseId._id);
+      const course = await courseService.getCourseById(chapter.courseId);
       course.chaptersId.pull(chapter);
       await course.save();
       next();

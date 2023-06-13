@@ -17,10 +17,34 @@ const courseSchema = new mongoose.Schema({
 courseSchema.pre('save', async function (next) {
   const course = this;
   try {
-    console.log(course.classId);
+    const user = await userService.getUserById(course.subAdmainId);
+    user.courses.push(course);
+    await user.save();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
+courseSchema.pre('save', async function (next) {
+  const course = this;
+  try {
     const _class = await classService.getClassById(course.classId);
     _class.coursesId.push(course);
+    await _class.save();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+
+courseSchema.pre('findOneAndDelete', async function (next) {
+  const course = this;
+  try {
+    const _class = await classService.getClassById(course.classId);
+    _class.coursesId.pull(course);
     await _class.save();
     next();
   } catch (error) {
@@ -31,10 +55,9 @@ courseSchema.pre('save', async function (next) {
 courseSchema.pre('findOneAndDelete', async function (next) {
   const course = this;
   try {
-    console.log(course.courseName);
-    const _class = await classService.getClassById(course.classId);
-    _class.coursesId.pull(course);
-    await _class.save();
+    const user = await userService.getUserById(course.subAdmainId);
+    user.courses.pull(course);
+    await user.save();
     next();
   } catch (error) {
     next(error);

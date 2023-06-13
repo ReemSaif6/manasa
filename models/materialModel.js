@@ -12,8 +12,8 @@ const materialSchema = new mongoose.Schema({
 materialSchema.pre('save', async function (next) {
   const material = this;
   try {
-    const lesson = await lessonService.getLessonById(material.lessonId._id);
-    lesson.materialsId.push(material.lessonId._id);
+    const lesson = await lessonService.getLessonById(material.lessonId);
+    lesson.materialsId.push(material);
     await lesson.save();
     next();
   } catch (error) {
@@ -21,11 +21,11 @@ materialSchema.pre('save', async function (next) {
   }
 });
 
-materialSchema.pre('remove', async function (next) {
+materialSchema.pre('findOneAndDelete', async function (next) {
   const material = this;
   try {
-    const lesson = await lessonService.getLessonById(material.lessonId._id);
-    lesson.materialsId.pull(material.lessonId._id);
+    const lesson = await lessonService.getLessonById(material.lessonId);
+    lesson.materialsId.pull(material);
     await lesson.save();
     next();
   } catch (error) {

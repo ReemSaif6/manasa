@@ -33,7 +33,7 @@ lessonSchema.pre('save', async function (next) {
     }
 });
 
-lessonSchema.pre('remove', async function (next) {
+lessonSchema.pre('findOneAndDelete', async function (next) {
   const lesson = this;
   try {
     const chapter = await chapterService.getChapterById(lesson.chapterId);

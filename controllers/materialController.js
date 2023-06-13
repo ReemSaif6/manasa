@@ -61,7 +61,7 @@ module.exports.deleteMaterial = async (req = express.request, res = express.resp
   } 
 };
 
-module.exports.search = async (req = express.request, res = express.response) => {
+module.exports.searchMaterial = async (req = express.request, res = express.response) => {
   const query = req.params.query;
     try {
       const results = await Material.find({
